@@ -11,32 +11,25 @@ export function useQuizContext() {
 export function QuizProvider({ children }) {
   const [quizData, setQuizData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [answeredArray, setAnsweredArray] = useState([]);
   const [score, setScore] = useState(0);
 
-  function handleAnsweredArray(answer) {
-    console.log(answeredArray, "answered");
-    return setAnsweredArray((oldArray) => {
-      if (oldArray.includes(answer)) {
-        return oldArray;
-      }
-      return [...oldArray, answer];
+  function handleScore() {
+    const filteredArray = quizData.filter((items) => {
+      return items.answers.some(
+        (answer) => answer.correct === true && answer.toggle === true
+      );
     });
-  }
-
-  function handleScore(answer) {
-    handleAnsweredArray(answer);
-    return setScore(answeredArray.length);
+    console.log(filteredArray, "filtered");
+    setScore(filteredArray.length * 25);
   }
 
   function handleAnswerToggle(index, questionId, answerId) {
     const newAnswersArray = quizData[index].answers.map((answer) => {
       if (answer.id === answerId) {
         if (quizData[index].correctAnswer === answer.answer) {
-          handleScore(answer.answer);
           return { ...answer, toggle: true };
         }
-        return { ...answer, toggle: !answer.toggle };
+        return { ...answer, toggle: true };
       }
       return { ...answer, toggle: false };
     });
@@ -74,6 +67,7 @@ export function QuizProvider({ children }) {
               answer: answer,
               id: nanoid(),
               toggle: false,
+              correct: answer === question.correct_answer ? true : false,
             })),
           };
         })
@@ -88,6 +82,10 @@ export function QuizProvider({ children }) {
   useEffect(() => {
     fetchQuizData();
   }, []);
+
+  useEffect(() => {
+    handleScore();
+  }, [quizData]);
 
   return (
     <QuizContext.Provider

@@ -15,7 +15,7 @@ export function QuestionList() {
 
   return (
     <div className=" flex flex-col gap-4">
-      <h2 className="text-xl  text-center">Score: {score}</h2>
+      <h2 className="text-xl text-center">Score: {score}</h2>
       {quizData?.map((question, index) => (
         <QuestionCard
           key={nanoid()}
