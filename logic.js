@@ -32,7 +32,7 @@ const question = [
       {
         answer: "Gunpei Yokoi",
         id: "aEuRkO2EccG-6wNW0-diC",
-        toggle: true,
+        toggle: false,
         correct: false,
       },
       {
@@ -44,7 +44,7 @@ const question = [
       {
         answer: "Hiroshi Yamauchi",
         id: "DdAfojMNx-Oi09jzxeY2_",
-        toggle: false,
+        toggle: true,
         correct: true,
       },
     ],
@@ -76,7 +76,7 @@ const question = [
   },
 ];
 
-let filtered;
+let filtered = [];
 
 const counterAnswered = question.filter((items) => {
   return items.answers.some(
@@ -84,10 +84,8 @@ const counterAnswered = question.filter((items) => {
   );
 });
 
-// question.forEach((element) => {
-//   return (filtered = element.answers.filter(
-//     (items) => items.correct === true && items.toggle === true
-//   ));
-// });
+question.map((qts) => qts.answers.map((ans) => filtered.push(ans)));
 
-console.log(counterAnswered);
+console.log(
+  filtered.filter((answer) => answer.correct === true && answer.toggle === true)
+);

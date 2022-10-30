@@ -5,8 +5,11 @@ export function QuestionCard({ index, id, question, answers }) {
   const { handleAnswerToggle } = useQuizContext();
 
   return (
-    <div className=" flex flex-col m-4 p-4 rounded-md h-full items-center  bg-slate-200 gap-4">
-      <h2 className="text-md text-center p-2 font-bold">{question}</h2>
+    <div className=" flex flex-col m-4 p-4 rounded-md h-[400px] justify-center items-center md:w-[600px] bg-slate-200 gap-4">
+      <h2 className="text-md text-center p-2 font-bold">
+        <span className="text-xl font-bold m-2">Question {index + 1}:</span>{" "}
+        {question}
+      </h2>
       <div className=" flex justify-evenly flex-wrap gap-4 ">
         {answers?.map((answer) => {
           const color = answer.toggle

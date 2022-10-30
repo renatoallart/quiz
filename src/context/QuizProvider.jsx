@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { triviaApi } from "../api/trivia";
 import { nanoid } from "nanoid";
+import encodeUtf8 from "encode-utf8";
 
 const QuizContext = createContext();
 
@@ -14,13 +15,25 @@ export function QuizProvider({ children }) {
   const [score, setScore] = useState(0);
 
   function handleScore() {
-    const filteredArray = quizData.filter((items) => {
-      return items.answers.some(
-        (answer) => answer.correct === true && answer.toggle === true
-      );
-    });
-    console.log(filteredArray, "filtered");
-    setScore(filteredArray.length * 25);
+    // first solution
+    // const filteredArray = quizData.filter((items) => {
+    //   return items.answers.some(
+    //     (answer) => answer.correct === true && answer.toggle === true
+    //   );
+    // });
+    // console.log(filteredArray, "filtered");
+
+    // second solution
+    const allAnswers = [];
+    quizData.map((question) =>
+      question.answers.map((answer) => allAnswers.push(answer))
+    );
+
+    const filteredCorrectAnswers = allAnswers.filter(
+      (answer) => answer.correct === true && answer.toggle === true
+    );
+
+    setScore(filteredCorrectAnswers.length * 25);
   }
 
   function handleAnswerToggle(index, questionId, answerId) {

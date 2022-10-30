@@ -14,8 +14,7 @@ export function QuestionList() {
   }
 
   return (
-    <div className=" flex flex-col gap-4">
-      <h2 className="text-xl text-center">Score: {score}</h2>
+    <div className=" flex flex-col gap-4 md:flex md:flex-row md:flex-wrap md:items-center md:justify-center">
       {quizData?.map((question, index) => (
         <QuestionCard
           key={nanoid()}
